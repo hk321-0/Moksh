@@ -1,0 +1,115 @@
+# Mental Wellbeing Gamified Chatbot Implementation Plan
+
+## Goal Description
+Create a web-based chatbot application that supports students during high‑stakes exams by preventing severe stress, burnout, and self‑doubt. The product combines journalling, mood logging, motivational hypes, and mindfulness exercises, all wrapped in a gamified experience that uncovers hidden emotional triggers and patterns.
+
+## User Review Required
+> [!IMPORTANT]
+> Review the proposed technology stack, data storage choices, and privacy handling. Confirm whether a server‑less architecture is acceptable or if a full backend is required. Decide on the level of personalization (e.g., per‑user profiles, AI‑driven trigger detection).
+
+## Open Questions
+> [!WARNING]
+> - **Platform Preference**: Should the app be a pure web app, a progressive web app (PWA), or have native mobile wrappers?
+> - **Data Persistence**: Local storage vs. cloud backend? What level of user data retention is acceptable under privacy regulations?
+> - **AI Engine**: Use a rule‑based sentiment analysis library (e.g., VADER) or integrate an LLM inference API for deeper emotional pattern detection?
+> - **Gamification Mechanics**: Points, streaks, badge system, or narrative‑driven quests? Which resonates most with exam‑taking students?
+> - **User Onboarding**: How much initial configuration (e.g., stress baseline questionnaire) is desired?
+> - **Accessibility**: Any specific accessibility standards (WCAG AA) to meet?
+
+## Proposed Changes
+---
+### Front‑end (Vanilla HTML/JS/CSS)
+#### [NEW] index.html
+- Basic page structure with semantic HTML5 elements.
+- Links to Google Font "Inter" for premium typography.
+- Meta tags for SEO (title, description, viewport, OG tags).
+
+#### [NEW] styles.css
+- Dark‑mode palette using HSL hues, glassmorphism cards, smooth gradients.
+- Micro‑animations for button hovers, mood‑log entries, and badge unlocks.
+
+#### [NEW] app.js
+- Core logic: routing between "Journal", "Mood Log", "Motivation", and "Mindfulness" sections.
+- State management using a simple in‑memory store with optional IndexedDB persistence.
+- Gamification engine: points accumulation, streak tracking, badge unlocking.
+- Integration points for AI analysis (fetch to backend or local library).
+
+---
+### Backend (Node.js + Express) – optional based on data‑persistence decision
+#### [NEW] server.js
+- Express server exposing REST endpoints:
+  - `/api/journal` POST/GET
+  - `/api/mood` POST/GET
+  - `/api/analysis` POST (receives recent entries, returns detected triggers/patterns).
+- CORS enabled for local dev.
+- Simple file‑based JSON storage (or SQLite) for prototype.
+
+#### [NEW] package.json
+- Scripts: `dev` (concurrently run `npm run start:client` and `npm run start:server`).
+- Dependencies: express, cors, body‑parser, sentiment (or vader‑sentiment), uuid.
+
+---
+### Data Model (JSON schema)
+#### [NEW] models/journalEntry.json
+```json
+{
+  "id": "uuid",
+  "timestamp": "ISO8601",
+  "content": "string",
+  "moodScore": -1 | 0 | 1,
+  "tags": ["string"]
+}
+```
+#### [NEW] models/moodLog.json
+```json
+{
+  "date": "YYYY‑MM‑DD",
+  "mood": "happy|neutral|stressed|anxious",
+  "notes": "string"
+}
+```
+
+---
+### AI Trigger Detection (Prototype)
+#### [NEW] analysis/triggerEngine.js
+- Reads recent journal & mood entries.
+- Runs sentiment analysis to flag negative spikes.
+- Detects recurring keywords (e.g., "fail", "deadline", "panic").
+- Returns a concise report with suggested mindfulness or hype prompts.
+
+---
+### Gamification Layer
+#### [NEW] gamification/points.js
+- Simple point rules (e.g., +10 for daily journal, +5 for mood log, +20 for completing a mindfulness session).
+- Badge definitions JSON file.
+
+---
+### Deployment & Dev Environment
+#### [NEW] .gitignore
+- Exclude `node_modules/`, `dist/`, `data/`.
+#### [NEW] README.md
+- Project overview, setup instructions, tech stack, and contribution guide.
+
+## Verification Plan
+### Automated Tests
+- Unit tests for backend endpoints using Jest.
+- Front‑end component tests with Jest + jsdom (e.g., journal entry rendering, mood log UI).
+- Integration test: simulate user flow (journal → mood log → analysis → motivational prompt) and assert points increment.
+
+### Manual Verification
+- Load the app in Chrome/Edge, test on both desktop and mobile viewports.
+- Verify dark‑mode appearance and glassmorphism effects.
+- Conduct a short user‑testing session with a student to assess emotional trigger detection relevance.
+
+### Acceptance Criteria
+- All core features (journal, mood log, motivation bot, mindfulness) functional.
+- Gamification points & badges display correctly.
+- AI trigger report updates after each new entry.
+- No sensitive data stored without user consent; privacy notice displayed on first launch.
+
+---
+**Next Steps**
+1. Confirm platform & data‑persistence decisions (see Open Questions).
+2. Agree on gamification mechanics and badge set.
+3. Choose AI analysis approach (local library vs. external LLM).
+4. Upon approval, scaffold the project structure and begin incremental development.

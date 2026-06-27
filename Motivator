@@ -1,0 +1,23 @@
+// motivator.js – simple hype toast
+export function showMotivation() {
+    const messages = [
+        "You’ve got this! Keep the momentum 🚀",
+        "Stay focused – every step counts!",
+        "Breathe deep, you are doing great!",
+        "Keep going, success is near!"
+    ];
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    const toast = document.createElement("div");
+    toast.textContent = msg;
+    toast.style.position = "fixed";
+    toast.style.bottom = "2rem";
+    toast.style.right = "2rem";
+    toast.style.background = "var(--color-primary)";
+    toast.style.color = "#fff";
+    toast.style.padding = "0.8rem 1.2rem";
+    toast.style.borderRadius = "var(--radius)";
+    toast.style.boxShadow = "var(--shadow)";
+    toast.style.zIndex = "1000";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}

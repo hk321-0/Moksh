@@ -1,0 +1,33 @@
+// mindfulness.js – simple 2‑minute breathing timer
+export function renderMindfulness(container) {
+    container.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = "card fade-in";
+    card.innerHTML = `
+    <h2>🧘 Mindfulness</h2>
+    <p>Press "Start" for a 2‑minute breathing session.</p>
+    <button id="startBreath">Start</button>
+    <div id="timer" style="margin-top:1rem;font-size:1.5rem;"></div>
+  `;
+    container.appendChild(card);
+
+    const timerDiv = card.querySelector("#timer");
+    card.querySelector("#startBreath").onclick = () => {
+        let remaining = 120;
+        timerDiv.textContent = format(remaining);
+        const id = setInterval(() => {
+            remaining--;
+            timerDiv.textContent = format(remaining);
+            if (remaining <= 0) {
+                clearInterval(id);
+                timerDiv.textContent = "Done! ✨";
+                window.dispatchEvent(new Event("mindfulnessComplete"));
+            }
+        }, 1000);
+    };
+    function format(s) {
+        const m = Math.floor(s / 60);
+        const sec = s % 60;
+        return `${m}:${sec.toString().padStart(2, "0")}`;
+    }
+}

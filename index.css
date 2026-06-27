@@ -1,0 +1,636 @@
+/* ================================================================
+   index.css  –  Moksh Design System
+   Dark mode + glassmorphism + micro-animations
+   ================================================================ */
+
+/* ── 1. CSS custom properties ──────────────────────────────────── */
+:root {
+    --font: 'Inter', system-ui, sans-serif;
+
+    /* palette */
+    --bg: hsl(222, 20%, 8%);
+    --bg2: hsl(222, 18%, 12%);
+    --surface: hsla(222, 20%, 18%, 0.7);
+    --surface2: hsla(222, 20%, 22%, 0.9);
+    --border: hsla(222, 30%, 40%, 0.35);
+    --primary: hsl(210, 85%, 58%);
+    --primary-h: hsl(210, 85%, 66%);
+    --accent: hsl(340, 75%, 62%);
+    --accent-h: hsl(340, 75%, 70%);
+    --gold: hsl(45, 90%, 58%);
+    --green: hsl(145, 65%, 50%);
+    --text: hsl(210, 20%, 95%);
+    --muted: hsl(210, 10%, 55%);
+
+    /* spacing / shape */
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 8px 32px hsla(222, 30%, 5%, 0.5);
+    --shadow-hover: 0 16px 48px hsla(222, 30%, 5%, 0.65);
+    --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── 2. Reset ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* animated gradient background */
+    background-image:
+        radial-gradient(ellipse at 20% 20%, hsla(210, 80%, 30%, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, hsla(340, 70%, 30%, 0.15) 0%, transparent 55%);
+}
+
+/* ── 3. Nav bar ────────────────────────────────────────────────── */
+.nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: hsla(222, 22%, 10%, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: auto;
+}
+
+.nav-logo {
+    font-size: 1.4rem;
+    color: var(--primary);
+    animation: spin 8s linear infinite;
+}
+
+.nav-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    color: var(--text);
+    background: var(--surface2);
+    border-color: var(--border);
+}
+
+.nav-btn.active {
+    color: var(--primary);
+    border-color: hsla(210, 85%, 58%, 0.4);
+}
+
+.nav-xp {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    background: hsla(45, 90%, 58%, 0.12);
+    border: 1px solid hsla(45, 90%, 58%, 0.25);
+    padding: 0.35rem 0.8rem;
+    border-radius: 100px;
+    transition: var(--transition);
+}
+
+/* ── 4. Layout ─────────────────────────────────────────────────── */
+.container {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ── 5. Cards ──────────────────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.75rem;
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card p {
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+}
+
+/* ── 6. Buttons ────────────────────────────────────────────────── */
+button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, var(--primary), hsl(220, 80%, 50%));
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px hsla(210, 85%, 40%, 0.35);
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px hsla(210, 85%, 40%, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.btn-accent {
+    background: linear-gradient(135deg, var(--accent), hsl(350, 75%, 50%));
+    box-shadow: 0 4px 14px hsla(340, 75%, 40%, 0.35);
+}
+
+button.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    box-shadow: none;
+}
+
+button.btn-ghost:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: none;
+}
+
+/* ── 7. Form elements ──────────────────────────────────────────── */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: hsla(222, 20%, 14%, 0.8);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    transition: var(--transition);
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px hsla(210, 85%, 58%, 0.18);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--muted);
+}
+
+label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* ── 8. Stats / XP bar ─────────────────────────────────────────── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-box .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: block;
+}
+
+.stat-box .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.xp-bar-wrap {
+    margin-top: 0.5rem;
+}
+
+.xp-bar-wrap p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+}
+
+.xp-bar {
+    height: 8px;
+    background: hsla(222, 20%, 22%, 1);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── 9. Mood picker ─────────────────────────────────────────────── */
+.mood-picker {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0.75rem 0;
+}
+
+.mood-option {
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.3rem;
+    transition: var(--transition);
+    filter: grayscale(40%) opacity(0.65);
+    border: 2px solid transparent;
+}
+
+.mood-option:hover {
+    filter: none;
+    transform: scale(1.15);
+}
+
+.mood-option.selected {
+    filter: none;
+    border-color: var(--primary);
+    transform: scale(1.2);
+    background: hsla(210, 85%, 58%, 0.12);
+}
+
+/* ── 10. Journal entries & mood log list ───────────────────────── */
+.entry-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.entry-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    animation: slideUp 0.3s ease;
+}
+
+.entry-item small {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.entry-item p {
+    margin-top: 0.25rem;
+    font-size: 0.92rem;
+}
+
+.entry-mood-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    background: hsla(210, 85%, 58%, 0.15);
+    color: var(--primary);
+    border: 1px solid hsla(210, 85%, 58%, 0.3);
+    margin-left: 0.4rem;
+}
+
+/* ── 11. Quest cards ────────────────────────────────────────────── */
+.quest-card {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.quest-card h3 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+}
+
+.quest-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.quest-progress {
+    margin-top: 0.5rem;
+}
+
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+}
+
+.badge {
+    font-size: 1.5rem;
+    padding: 0.4rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: default;
+}
+
+.badge.unlocked {
+    background: hsla(45, 90%, 58%, 0.15);
+    border-color: hsla(45, 90%, 58%, 0.4);
+    animation: badgePop 0.5s ease-out;
+}
+
+.badge.locked {
+    filter: grayscale(100%) opacity(0.4);
+}
+
+/* ── 12. Mindfulness / breathing circle ────────────────────────── */
+.breathe-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsla(210, 85%, 58%, 0.25), hsla(210, 85%, 58%, 0.06));
+    border: 2px solid hsla(210, 85%, 58%, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 1.2rem auto;
+    transition: transform 4s ease-in-out, box-shadow 4s ease-in-out;
+}
+
+.breathe-circle.inhale {
+    transform: scale(1.4);
+    box-shadow: 0 0 48px hsla(210, 85%, 58%, 0.4);
+}
+
+.breathe-circle.exhale {
+    transform: scale(0.9);
+    box-shadow: none;
+}
+
+#breath-label {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+    height: 1.5rem;
+}
+
+#breath-timer {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-top: 0.5rem;
+}
+
+/* ── 13. Toast notifications ────────────────────────────────────── */
+#toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 999;
+}
+
+.toast {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    animation: toastIn 0.35s ease;
+    max-width: 280px;
+}
+
+.toast.success {
+    border-color: hsla(145, 65%, 50%, 0.5);
+    color: var(--green);
+}
+
+.toast.hype {
+    border-color: hsla(45, 90%, 58%, 0.5);
+    color: var(--gold);
+}
+
+/* ── 14. Divider ────────────────────────────────────────────────── */
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1rem 0;
+}
+
+/* ── 15. Utility ────────────────────────────────────────────────── */
+.text-muted {
+    color: var(--muted);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.flex-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ── 16. Keyframe animations ────────────────────────────────────── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes badgePop {
+    0% {
+        transform: scale(0.4);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.slide-up {
+    animation: slideUp 0.4s ease forwards;
+}
+
+/* ── 17. Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .nav-bar {
+        padding: 0.7rem 1rem;
+    }
+
+    .nav-btn {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .container {
+        padding: 1.2rem 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+}

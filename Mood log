@@ -1,0 +1,57 @@
+// moodLog.js – simple mood logging UI
+export function renderMoodLog(container) {
+    container.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = "card fade-in";
+    card.innerHTML = `
+    <h2>😊 Mood Log</h2>
+    <div id="moodPicker">
+      <span data-mood="happy">😁</span>
+      <span data-mood="neutral">😐</span>
+      <span data-mood="stressed">😣</span>
+      <span data-mood="anxious">😰</span>
+      <span data-mood="down">😭</span>
+    </div>
+    <textarea id="moodNote" rows="2" placeholder="Add a note (optional)"></textarea>
+    <button id="saveMood">Save Mood</button>
+    <div id="log"></div>
+  `;
+    container.appendChild(card);
+
+    const logs = JSON.parse(localStorage.getItem("moodLogs") || "[]");
+    const logDiv = card.querySelector("#log");
+    function renderLog() {
+        logDiv.innerHTML = "";
+        logs
+            .sort((a, b) => new Date(b.ts) - new Date(a.ts))
+            .forEach(l => {
+                const el = document.createElement("div");
+                el.style.borderBottom = "1px solid var(--color-muted)";
+                el.style.padding = "0.5rem 0";
+                el.innerHTML = `<small>${new Date(l.ts).toLocaleDateString()} – ${l.mood}</small><p>${l.note || ""}</p>`;
+                logDiv.appendChild(el);
+            });
+    }
+    renderLog();
+
+    let selected = null;
+    card.querySelectorAll("#moodPicker span").forEach(s => {
+        s.style.cursor = "pointer";
+        s.onclick = () => {
+            selected = s.dataset.mood;
+            card.querySelectorAll("#moodPicker span").forEach(i => (i.style.opacity = i === s ? "1" : "0.5"));
+        };
+    });
+
+    card.querySelector("#saveMood").onclick = () => {
+        if (!selected) return alert("Pick a mood first!");
+        const note = card.querySelector("#moodNote").value.trim();
+        logs.push({ ts: new Date().toISOString(), mood: selected, note });
+        localStorage.setItem("moodLogs", JSON.stringify(logs));
+        renderLog();
+        selected = null;
+        card.querySelectorAll("#moodPicker span").forEach(i => (i.style.opacity = "1"));
+        card.querySelector("#moodNote").value = "";
+        window.dispatchEvent(new Event("newMood"));
+    };
+}
